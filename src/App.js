@@ -68,7 +68,7 @@ class App extends React.Component {
     const { isAuthenticated, user, token } = this.state
 
     const MenuBar = withRouter(({ history, location: { pathname } }) => {
-      if(isAuthenticated && user) {
+      if (isAuthenticated && user) {
         return (
           <nav>
             <span>{user.firstname} {user.lastname} &ndash; {user.accountNr}</span>

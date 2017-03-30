@@ -50,7 +50,7 @@ class Login extends React.Component {
     event.preventDefault()
     const { login, password } = this.state
     this.props.authenticate(login, password, (error) => {
-      if(error) {
+      if (error) {
         this.setState({error})
       } else {
         this.setState({redirectToReferrer: true, error: null})
