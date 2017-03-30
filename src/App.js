@@ -98,7 +98,7 @@ class App extends React.Component {
             The following are protected routes that are only available for logged-in users. We also pass the user and token so
             these components can do API calls. PrivateRoute is not part of react-router but our own implementation.
           */}
-          <PrivateRoute path="/dashboard" isAuthenticated={isAuthenticated} token={token} component={Dashboard}/>
+          <PrivateRoute path="/dashboard" isAuthenticated={isAuthenticated} token={token} component={Dashboard} user={user}/>
           <PrivateRoute path="/transactions" isAuthenticated={isAuthenticated} token={token} user={user} component={AllTransactions}/>
         </div>
       </Router>
