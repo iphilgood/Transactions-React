@@ -4,6 +4,7 @@ import React from 'react'
 
 import { getTransactions } from '../api'
 import { User, Transaction } from '../api'
+import TransactionsList from './TransactionsList'
 
 /*
   Use the api functions to call the API server. For example, the transactions
@@ -29,6 +30,10 @@ class Dashboard extends React.Component {
     transactions: Array<Transaction>,
   }
 
+  state = {
+    transactions: []
+  }
+
   componentDidMount() {
     getTransactions(this.props.token)
       .then(({ result: transactions }) => this.setState({ transactions }));
@@ -38,8 +43,19 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <h1>{this.props.user.accountNr}</h1>
+        <h1>Kontoübersicht {this.props.user.accountNr}</h1>
         This is the dashboard
+        <table>
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Target</th>
+              <th>Amount [CHF]</th>
+              <th>Balance [CHF]</th>
+            </tr>
+          </thead>
+          <TransactionsList transactions={this.state.transactions} />
+        </table>
       </div>
     )
   }
