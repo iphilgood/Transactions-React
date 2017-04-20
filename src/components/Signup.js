@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 import { signup } from '../api'
@@ -119,7 +119,7 @@ class Signup extends React.Component {
     return (
       <Grid.Column>
         <Header as='h2'>Bank of Rapperswil</Header>
-        <Form error>
+        <Form className={error ? 'error' : ''}>
           <Segment raised>
             <Header as='h3'>Registrieren</Header>
 
@@ -134,9 +134,13 @@ class Signup extends React.Component {
 
             { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
 
-            <Button primary className={this.isFormValid() ? "" : "disabled"} onClick={this.handleSubmit}>Account eröffnen</Button>
+            <Button primary fluid className={this.isFormValid() ? "" : "disabled"} onClick={this.handleSubmit}>Account eröffnen</Button>
           </Segment>
         </Form>
+
+        <Message>
+          <Link to="/">Zurück zur Startseite</Link>
+        </Message>
       </Grid.Column>
     )
   }

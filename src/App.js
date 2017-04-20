@@ -7,6 +7,7 @@ import {
   Link,
   withRouter
 } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
 
 import Home from './components/Home'
 import Login from './components/Login'
@@ -89,7 +90,7 @@ class App extends React.Component {
 
     return (
       <Router>
-        <div>
+        <Container>
           <MenuBar/>
           <Route exact path="/" render={props => <Home {...props} isAuthenticated={isAuthenticated} />}/>
           <Route path="/login" render={props => <Login {...props} authenticate={this.authenticate} />}/>
@@ -100,7 +101,7 @@ class App extends React.Component {
           */}
           <PrivateRoute path="/dashboard" isAuthenticated={isAuthenticated} token={token} component={Dashboard} user={user}/>
           <PrivateRoute path="/transactions" isAuthenticated={isAuthenticated} token={token} user={user} component={AllTransactions}/>
-        </div>
+        </Container>
       </Router>
     )
   }
