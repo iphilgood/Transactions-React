@@ -38,26 +38,25 @@ class AllTransactions extends React.Component {
   }
 
   componentDidMount() {
-    this.updateTransactions();
+    const { selectedYear, selectedMonth } = this.state
+    this.updateTransactions(selectedYear, selectedMonth);
   }
 
   yearChanged = (event: Event) => {
-    if(event.target instanceof HTMLInputElement) {
-      this.setState({ selectedYear: event.target.value });
-      this.updateTransactions()
-    }
+    const year = event.target.value
+    this.setState({ selectedYear: year });
+    this.updateTransactions(year, this.state.selectedMonth);
   }
 
   monthChanged = (event: Event) => {
-    if(event.target instanceof HTMLInputElement) {
-      this.setState({ selectedMonth: event.target.value });
-      this.updateTransactions()
-    }
+    const month = event.target.value
+    this.setState({ selectedMonth: month });
+    this.updateTransactions(this.state.selectedYear, month);
   }
 
-  updateTransactions = () => {
-    const firstDay = new Date(this.state.selectedYear, this.state.selectedMonth, 1);
-    const lastDay = new Date(this.state.selectedYear, this.state.selectedMonth + 1, 0);
+  updateTransactions = (year, month) => {
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
     getTransactionsBetween(firstDay, lastDay, this.props.token)
         .then(({ result: transactions }) => this.setState({ transactions }));
   }
@@ -82,7 +81,7 @@ class AllTransactions extends React.Component {
           <label htmlFor="month">Select a month</label>
           <select name="month" value={this.state.selectedMonth} onChange={this.monthChanged}>
           {this.months.map((value, index) =>
-            <option key={index} value={index + 1}>{value}</option>
+            <option key={index} value={index}>{value}</option>
           )}
           </select>
         </div>
