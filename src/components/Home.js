@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Button, Segment } from 'semantic-ui-react'
 
 export type Props = {
   isAuthenticated: boolean,
@@ -10,15 +11,15 @@ export type Props = {
 const Home = ({isAuthenticated}: Props) => (
   <div>
     { isAuthenticated
-      ? <div>
+      ? <Segment raised>
           <p>Willkommen zurück!</p>
-          <Link to={'/dashboard'}>Zum Dashboard</Link>
-        </div>
-      : <div>
-          <Link to={'/login'}>Einloggen</Link>
+          <Button as='a' href={'/dashboard'}>Zum Dashboard</Button>
+        </Segment>
+      : <Segment raised>
+          <Button as='a' primary fluid href={'/login'}>Einloggen</Button>
           <p>Falls Sie noch keinen Account besitzen können Sie sich hier registrieren:</p>
-          <Link to={'/signup'}>Registrieren</Link>
-        </div>
+          <Button as='a' fluid href={'/signup'}>Registrieren</Button>
+        </Segment>
     }
   </div>
 )

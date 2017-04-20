@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 import { signup } from '../api'
 
@@ -70,18 +71,30 @@ class Signup extends React.Component {
     }
 
     return (
-      <div>
-        <h1>Bank of Rapperswil</h1>
-        <form>
-          <h2>Registrieren</h2>
-          <input onChange={this.handleLoginChanged} placeholder='Login' value={this.state.login} />
-          <input onChange={this.handleFirstNameChanged} placeholder='Vorname' value={this.state.firstname} />
-          <input onChange={this.handleLastNameChanged} placeholder='Nachname' value={this.state.lastname} />
-          <input onChange={this.handlePasswordChanged} placeholder='Passwort' type="password" value={this.state.password} />
-          <button onClick={this.handleSubmit}>Account eröffnen</button>
-        </form>
-        { error && <p>Es ist ein Fehler aufgetreten!</p> }
-      </div>
+      <Grid.Column>
+        <Header as='h2'>Bank of Rapperswil</Header>
+        <Form error>
+          <Segment raised>
+            <Header as='h3'>Registrieren</Header>
+            <Form.Field>
+              <input onChange={this.handleLoginChanged} placeholder='Login' value={this.state.login} />
+            </Form.Field>
+            <Form.Field>
+              <input onChange={this.handleFirstNameChanged} placeholder='Vorname' value={this.state.firstname} />
+            </Form.Field>
+            <Form.Field>
+              <input onChange={this.handleLastNameChanged} placeholder='Nachname' value={this.state.lastname} />
+            </Form.Field>
+            <Form.Field>
+              <input onChange={this.handlePasswordChanged} placeholder='Passwort' type="password" value={this.state.password} />
+            </Form.Field>
+
+            { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
+
+            <Button primary onClick={this.handleSubmit}>Account eröffnen</Button>
+          </Segment>
+        </Form>
+      </Grid.Column>
     )
   }
 }
