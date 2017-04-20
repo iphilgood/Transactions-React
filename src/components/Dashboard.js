@@ -1,6 +1,8 @@
 // @flow
 
 import React from 'react'
+import { Grid, Segment } from 'semantic-ui-react'
+
 import { User } from '../api'
 import LatestTransactions from './LatestTransactions'
 import NewPayment from './NewPayment'
@@ -16,12 +18,23 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Kontoübersicht {this.props.user.accountNr}</h1>
-        This is the dashboard
-        <NewPayment {...this.props} />
-        <LatestTransactions {...this.props} />
-      </div>
+      <Segment.Group raised>
+        <Segment>
+          <h1>Kontoübersicht {this.props.user.accountNr}</h1>
+        </Segment>
+        <Segment>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={6}>
+                <NewPayment {...this.props} />
+              </Grid.Column>
+              <Grid.Column width={10}>
+                <LatestTransactions {...this.props} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
+      </Segment.Group>
     )
   }
 }

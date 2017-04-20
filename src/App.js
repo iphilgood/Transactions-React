@@ -7,7 +7,7 @@ import {
   Link,
   withRouter
 } from 'react-router-dom'
-import { Container } from 'semantic-ui-react'
+import { Container, Menu } from 'semantic-ui-react'
 
 import Home from './components/Home'
 import Login from './components/Login'
@@ -71,17 +71,21 @@ class App extends React.Component {
     const MenuBar = withRouter(({ history, location: { pathname } }) => {
       if (isAuthenticated && user) {
         return (
-          <nav>
-            <span>{user.firstname} {user.lastname} &ndash; {user.accountNr}</span>
+          <Menu>
+            <Menu.Item header>{user.firstname}&nbsp;{user.lastname} &ndash; {user.accountNr}</Menu.Item>
             {/* Links inside the App are created using the react-router's Link component */}
-            <Link to="/">Home</Link>
-            <Link to="/dashboard">Kontoübersicht</Link>
-            <Link to="/transactions">Zahlungen</Link>
-            <a href="/logout" onClick={(event) => {
-              event.preventDefault()
-              this.signout(() => history.push('/'))
-            }}>Logout {user.firstname} {user.lastname}</a>
-          </nav>
+            <Menu.Item name='home'><Link to="/">Home</Link></Menu.Item>
+            <Menu.Item name='dashboard'><Link to="/dashboard">Kontoübersicht</Link></Menu.Item>
+            <Menu.Item name='transactions'><Link to="/transactions">Zahlungen</Link></Menu.Item>
+            <Menu.Menu position='right'>
+              <Menu.Item>
+                <a href="/logout" onClick={(event) => {
+                  event.preventDefault()
+                  this.signout(() => history.push('/'))
+                }}>Logout {user.firstname} {user.lastname}</a>
+              </Menu.Item>
+            </Menu.Menu>
+          </Menu>
         )
       } else {
         return null
@@ -91,7 +95,7 @@ class App extends React.Component {
     return (
       <Router>
         <Container>
-          <MenuBar/>
+          <MenuBar />
           <Route exact path="/" render={props => <Home {...props} isAuthenticated={isAuthenticated} />}/>
           <Route path="/login" render={props => <Login {...props} authenticate={this.authenticate} />}/>
           <Route path="/signup" component={Signup}/>
