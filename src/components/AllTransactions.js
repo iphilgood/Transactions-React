@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react'
+import { Form, Header, Segment, Table } from 'semantic-ui-react'
 
 import { getTransactionsBetween, Transaction } from '../api'
 import TransactionsList from './TransactionsList'
@@ -27,7 +28,10 @@ class AllTransactions extends React.Component {
     super(props)
 
     this.years = Array.from(Array(3)).map((x, i) => new Date().getFullYear() - i);
+    this.yearOptions = this.years.map((value, index) => { return { key: index, text: value, value: value}})
+
     this.months = Array.from(Array(12)).map((x, i) => new Date(`${i + 1} / 01/2000`).toLocaleString('en-us', { month: 'long' }));
+    this.monthOptions = this.months.map((value, index) => { return { key: index, text: value, value: index}})
 
     const date = new Date();
     this.state = {
@@ -42,14 +46,14 @@ class AllTransactions extends React.Component {
     this.updateTransactions(selectedYear, selectedMonth);
   }
 
-  yearChanged = (event: Event) => {
-    const year = event.target.value
+  yearChanged = (event: Event, { value }) => {
+    const year = value
     this.setState({ selectedYear: year });
     this.updateTransactions(year, this.state.selectedMonth);
   }
 
-  monthChanged = (event: Event) => {
-    const month = event.target.value
+  monthChanged = (event: Event, { value }) => {
+    const month = value
     this.setState({ selectedMonth: month });
     this.updateTransactions(this.state.selectedYear, month);
   }
@@ -61,44 +65,33 @@ class AllTransactions extends React.Component {
         .then(({ result: transactions }) => this.setState({ transactions }));
   }
 
+  const
+
   render() {
     return (
-      <div>
-        <h1>All Transactions</h1>
+      <Segment raised>
+        <Header as='h3'>Alle Transaktionen</Header>
 
-        <h4>Filter</h4>
+        <Form>
+          <Form.Group widths='equal'>
+            <Form.Select label='Select a year' options={this.yearOptions} placeholder='Select a year' onChange={this.yearChanged} value={this.state.selectedYear} />
+            <Form.Select label='Select a month' options={this.monthOptions} placeholder='Select a month' onChange={this.monthChanged} value={this.state.selectedMonth} />
+          </Form.Group>
+        </Form>
 
-        <div>
-          <label htmlFor="year">Select a year</label>
-          <select name="year" value={this.state.selectedYear} onChange={this.yearChanged}>
-            {this.years.map((value, index) =>
-              <option key={index} value={value}>{value}</option>
-            )}
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="month">Select a month</label>
-          <select name="month" value={this.state.selectedMonth} onChange={this.monthChanged}>
-          {this.months.map((value, index) =>
-            <option key={index} value={index}>{value}</option>
-          )}
-          </select>
-        </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Source</th>
-              <th>Target</th>
-              <th>Amount [CHF]</th>
-              <th>Balance [CHF]</th>
-            </tr>
-          </thead>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Date</Table.HeaderCell>
+              <Table.HeaderCell>Source</Table.HeaderCell>
+              <Table.HeaderCell>Target</Table.HeaderCell>
+              <Table.HeaderCell>Amount [CHF]</Table.HeaderCell>
+              <Table.HeaderCell>Balance [CHF]</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
           <TransactionsList transactions={this.state.transactions} />
-        </table>
-      </div>
+        </Table>
+      </Segment>
     )
   }
 }
