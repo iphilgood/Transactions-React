@@ -1,6 +1,9 @@
 // @flow
 
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { Header, Table } from 'semantic-ui-react'
+
 import { getTransactionsWithCount, Transaction } from '../api'
 import TransactionsList from './TransactionsList'
 
@@ -26,18 +29,21 @@ class LatestTransactions extends React.Component {
   render() {
     return (
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Source</th>
-              <th>Target</th>
-              <th>Amount [CHF]</th>
-              <th>Balance [CHF]</th>
-            </tr>
-          </thead>
+        <Header as='h3'>Letzte Zahlungen</Header>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Date</Table.HeaderCell>
+              <Table.HeaderCell>Source</Table.HeaderCell>
+              <Table.HeaderCell>Target</Table.HeaderCell>
+              <Table.HeaderCell>Amount [CHF]</Table.HeaderCell>
+              <Table.HeaderCell>Balance [CHF]</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
           <TransactionsList transactions={this.state.transactions} />
-        </table>
+        </Table>
+
+        <Link to='/transactions' className='ui button right floated'>Alle Transaktionen anzeigen</Link>
       </div>
     )
   }
