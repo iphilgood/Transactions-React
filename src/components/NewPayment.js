@@ -1,6 +1,8 @@
 // @flow
 
 import React from 'react'
+import { Button, Form, Header, Message } from 'semantic-ui-react'
+
 import { transfer, AccountNr, User } from '../api'
 
 export type Props = {
@@ -52,25 +54,27 @@ class NewPayment extends React.Component {
 
     return (
       <div>
-        <form>
-          <div>
+        <Header as='h3'>Neue Zahlung</Header>
+        <Form className={error ? 'error' : ''}>
+          <Form.Field>
             <label htmlFor="from">From</label>
             <input type="text" name="from" value={this.props.user.accountNr} required disabled />
-          </div>
+          </Form.Field>
 
-          <div>
+          <Form.Field>
             <label htmlFor="target">To</label>
-            <input placeholder="Target Account Number" value={target} onChange={this.targetChanged} type="text" name="target" required />
-          </div>
+            <input placeholder="Zielkonto" value={target} onChange={this.targetChanged} type="text" name="target" required />
+          </Form.Field>
 
-          <div>
-            <label htmlFor="amount">Amount [CHF]</label>
-            <input placeholder="Amount in CHF" value={amount} onChange={this.amountChanged} type="number" name="amount" required />
-          </div>
+          <Form.Field>
+            <label htmlFor="amount">Betrag [CHF]</label>
+            <input placeholder="Betrag in CHF" value={amount} onChange={this.amountChanged} type="number" name="amount" required />
+          </Form.Field>
 
-          <button onClick={this.handleSubmit}>Zahlen</button>
-        </form>
-        { error && <p>Es ist ein Fehler aufgetreten!</p> }
+          { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
+
+          <Button primary fluid onClick={this.handleSubmit}>Betrag Überweisen</Button>
+        </Form>
       </div>
     )
   }
