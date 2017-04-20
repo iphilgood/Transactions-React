@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Redirect, Link } from 'react-router-dom'
-import { Container, Header } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 export type Props = {
   /* Callback to submit an authentication request to the server */
@@ -70,17 +70,28 @@ class Login extends React.Component {
     }
 
     return (
-      <Container fluid>
-          <Header as="h2">Bank of Rapperswil</Header>
-          <form>
-            <h2>Login</h2>
-            <input onChange={this.handleLoginChanged} placeholder='Login' value={this.state.login} />
-            <input onChange={this.handlePasswordChanged} placeholder='Password' type="password" value={this.state.password} />
-            <button onClick={this.handleSubmit}>Log-in</button>
-          </form>
-          { error && <p>Es ist ein Fehler aufgetreten!</p> }
+      <Grid.Column>
+        <Header as='h2'>Bank of Rapperswil</Header>
+        <Form className={error ? 'error' : ''}>
+          <Segment raised>
+            <Header as='h3'>Login</Header>
+            <Form.Field>
+              <input onChange={this.handleLoginChanged} placeholder='Login' value={this.state.login} />
+            </Form.Field>
+            <Form.Field>
+              <input onChange={this.handlePasswordChanged} placeholder='Password' type="password" value={this.state.password} />
+            </Form.Field>
+
+            { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
+
+            <Button primary fluid onClick={this.handleSubmit}>Log-in</Button>
+          </Segment>
+        </Form>
+
+        <Message>
           <Link to="/signup">Noch keinen Account?</Link>
-      </Container>
+        </Message>
+      </Grid.Column>
     )
   }
 }
