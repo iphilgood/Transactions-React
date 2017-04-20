@@ -4,8 +4,9 @@ import React from 'react';
 
 function TransactionsList({transactions}) {
 
-    const renderTransactionRow = ({from, target, amount, total}, index) =>
+    const renderTransactionRow = ({date, from, target, amount, total}, index) =>
       <tr key={index}>
+        <td>{date}</td>
         <td>{from}</td>
         <td>{target}</td>
         <td>{amount} CHF</td>

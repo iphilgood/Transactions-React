@@ -70,15 +70,21 @@ export function transfer(
   return postAuthenticatedJson('/accounts/transactions', token, {target, amount}).then(parseJSON)
 }
 
-export function getTransactions(
-  token: string,
-  fromDate: string = "",
-  toDate: string = "",
-  count: number = 3,
-  skip: number = 0,
+export function getTransactionsBetween(
+  fromDate: string,
+  toDate: string,
+  token: string
 ): Promise<{result: Array<Transaction>, query: { resultcount: number}}> {
   return getAuthenticatedJson(
-    `/accounts/transactions?fromDate=${fromDate}&toDate=${toDate}&count=${count}&skip=${skip}`,
+    `/accounts/transactions?fromDate=${fromDate}&toDate=${toDate}`,
+    token).then(parseJSON)
+}
+export function getTransactionsWithCount(
+  count: number,
+  token: string
+): Promise<{result: Array<Transaction>, query: { resultcount: number}}> {
+  return getAuthenticatedJson(
+    `/accounts/transactions?count=${count}`,
     token).then(parseJSON)
 }
 
