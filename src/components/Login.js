@@ -35,6 +35,14 @@ class Login extends React.Component {
     redirectToReferrer: false,
   }
 
+  isLoginValid = () => {
+    return this.state.login.length >= 3
+  }
+
+  isPasswordValid = () => {
+      return this.state.password.length >= 3
+  }
+
   handleLoginChanged = (event: Event) => {
     if(event.target instanceof HTMLInputElement) {
       this.setState({login: event.target.value})
@@ -76,10 +84,14 @@ class Login extends React.Component {
           <Segment raised>
             <Header as='h3'>Login</Header>
             <Form.Field>
+              <label>User name:</label>
               <input onChange={this.handleLoginChanged} placeholder='Login' value={this.state.login} />
+              <p hidden={this.isLoginValid()}>Please specify your login, at least three characters</p>
             </Form.Field>
             <Form.Field>
+              <label>Password:</label>
               <input onChange={this.handlePasswordChanged} placeholder='Password' type="password" value={this.state.password} />
+              <p>Please specify your password, at least three characters</p>
             </Form.Field>
 
             { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
