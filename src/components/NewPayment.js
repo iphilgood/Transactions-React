@@ -115,13 +115,13 @@ class NewPayment extends React.Component {
 
           <Form.Field>
             <label htmlFor="target">To</label>
-            <input placeholder="Target account number" value={target} onChange={this.targetChanged} type="text" name="target" required />
+            <input placeholder="Target account number" value={target} onChange={this.targetChanged} type="text" name="target" pattern=".{7,}" min="1000000" max="9999999" step="1" required />
             <p>{this.state.targetMessage}</p>
           </Form.Field>
 
           <Form.Field>
             <label htmlFor="amount">Betrag [CHF]</label>
-            <input placeholder="Amount in CHF" value={amount} onChange={this.amountChanged} type="number" name="amount" required />
+            <input placeholder="Amount in CHF" value={amount} onChange={this.amountChanged} type="number" name="amount" min="0.05" step="0.05" required />
             <p hidden={this.isAmountValid()}>Please specify the amount.</p>
           </Form.Field>
 
