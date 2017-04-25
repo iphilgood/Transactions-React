@@ -43,6 +43,10 @@ class Login extends React.Component {
       return this.state.password.length >= 3
   }
 
+  isFormValid = () => {
+    return this.isLoginValid() && this.isPasswordValid()
+  }
+
   handleLoginChanged = (event: Event) => {
     if(event.target instanceof HTMLInputElement) {
       this.setState({login: event.target.value})
@@ -91,12 +95,12 @@ class Login extends React.Component {
             <Form.Field>
               <label>Password:</label>
               <input onChange={this.handlePasswordChanged} placeholder='Password' type="password" value={this.state.password} />
-              <p>Please specify your password, at least three characters</p>
+              <p hidden={this.isPasswordValid()}>Please specify your password, at least three characters</p>
             </Form.Field>
 
             { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
 
-            <Button primary fluid onClick={this.handleSubmit}>Log-in</Button>
+            <Button className={this.isFormValid() ? "" : "disabled"} primary fluid onClick={this.handleSubmit}>Log-in</Button>
           </Segment>
         </Form>
 
