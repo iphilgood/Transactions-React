@@ -129,11 +129,11 @@ class NewPayment extends React.Component {
 
           <Button className={this.isFormValid() ? "" : "disabled"} primary fluid>Pay</Button>
         </Form>
-        <Form hidden={!success}>
+        <div hidden={!success}>
           <p>Transaction to {target} succeeded!</p>
           <p>New balance: {balance}</p>
           <Button primary fluid onClick={this.startOver}>Start over</Button>
-        </Form>
+        </div>
       </div>
     )
   }
