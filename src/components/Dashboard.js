@@ -6,6 +6,7 @@ import { Grid, Segment } from 'semantic-ui-react'
 import { User } from '../api'
 import LatestTransactions from './LatestTransactions'
 import NewPayment from './NewPayment'
+import mitt from './mitt'
 
 export type Props = {
   token: string,
@@ -14,6 +15,7 @@ export type Props = {
 
 class Dashboard extends React.Component {
 
+  emitter = mitt()
   props: Props
 
   render() {
@@ -26,10 +28,10 @@ class Dashboard extends React.Component {
           <Grid stackable>
             <Grid.Row>
               <Grid.Column width={6}>
-                <NewPayment {...this.props} />
+                <NewPayment emitter={this.emitter} {...this.props} />
               </Grid.Column>
               <Grid.Column width={10}>
-                <LatestTransactions {...this.props} />
+                <LatestTransactions emitter={this.emitter} {...this.props} />
               </Grid.Column>
             </Grid.Row>
           </Grid>

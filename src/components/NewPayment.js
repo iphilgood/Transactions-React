@@ -41,6 +41,7 @@ class NewPayment extends React.Component {
       console.log("Transaction successful ", result)
       this.setState({ target: "", amount: 0, error: null })
       this.validateTarget()
+      this.props.emitter.emit('paymentCompleted')
     }).catch(error =>
       this.setState({ error })
     )

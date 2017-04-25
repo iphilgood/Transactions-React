@@ -21,9 +21,19 @@ class LatestTransactions extends React.Component {
     transactions: []
   }
 
-  componentDidMount() {
+  refresh = () => {
+    console.log('will refresh latest transactions')
     getTransactionsWithCount(3, this.props.token)
       .then(({ result: transactions }) => this.setState({ transactions }));
+  }
+
+  componentDidMount() {
+    this.props.emitter.on('paymentCompleted', this.refresh)
+    this.refresh()
+  }
+
+  componentWillUnmount() {
+    this.props.emitter.off('paymentCompleted', this.refresh)
   }
 
   render() {
