@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
           <h1>Kontoübersicht {this.props.user.accountNr}</h1>
         </Segment>
         <Segment>
-          <Grid>
+          <Grid stackable>
             <Grid.Row>
               <Grid.Column width={6}>
                 <NewPayment {...this.props} />
