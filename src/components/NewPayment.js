@@ -3,7 +3,7 @@
 import React from 'react'
 import { Button, Form, Header, Message } from 'semantic-ui-react'
 
-import { transfer, getAccount, AccountNr, User } from '../api'
+import { transfer, getAccount, getAccountDetails, AccountNr, User } from '../api'
 
 export type Props = {
   token: string,
@@ -15,6 +15,9 @@ class NewPayment extends React.Component {
   props: Props
 
   state: {
+    source: AccountNr,
+    balance?: Number,
+    success: Bool,
     error?: Error,
     target: AccountNr,
     targetValid: Bool,
@@ -23,6 +26,9 @@ class NewPayment extends React.Component {
   }
 
   state = {
+    source: this.props.user.accountNr,
+    balance: undefined,
+    success: false,
     error: undefined,
     target: "",
     targetValid: false,
@@ -31,16 +37,15 @@ class NewPayment extends React.Component {
   }
 
   componentDidMount() {
-    this.validateTarget()
+    this.updateSource()
+    this.validateTarget("")
   }
 
   handleSubmit = (event: Event) => {
     event.preventDefault()
     const { target, amount } = this.state
     transfer(target, amount, this.props.token).then(result => {
-      console.log("Transaction successful ", result)
-      this.setState({ target: "", amount: 0, error: null })
-      this.validateTarget()
+      this.setState({ balance: result.total, success: true })
       this.props.emitter.emit('paymentCompleted')
     }).catch(error =>
       this.setState({ error })
@@ -59,7 +64,7 @@ class NewPayment extends React.Component {
     }
   }
 
-  validateTarget = (target: String = this.state.target) => {
+  validateTarget = (target: String) => {
     if (target.length <= 2) {
       this.setState({ target: target, targetValid: false, targetMessage: "Please specify the target account number."})
       return
@@ -84,33 +89,50 @@ class NewPayment extends React.Component {
     return this.isAmountValid() && this.isTargetValid()
   }
 
+  startOver = () => {
+    this.setState({ success: false, amount: 0, error: null })
+    this.validateTarget("")
+  }
+
+  updateSource = () => {
+    getAccountDetails(this.props.token).then(result => {
+      this.setState({ balance: result.amount })
+    })
+  }
+
   render() {
-    const { target, amount, error } = this.state
+    const { source, balance, target, amount, success, error } = this.state
+    const sourceText = `${source} ${balance === undefined ? "" : `[CHF ${balance}]`}`
 
     return (
       <div>
         <Header as='h3'>Neue Zahlung</Header>
-        <Form className={error ? 'error' : ''}>
+        <Form hidden={success} className={error ? 'error' : ''}>
           <Form.Field>
             <label htmlFor="from">From</label>
-            <input type="text" name="from" value={this.props.user.accountNr} required disabled />
+            <input type="text" name="from" value={sourceText} required disabled />
           </Form.Field>
 
           <Form.Field>
             <label htmlFor="target">To</label>
-            <input placeholder="Zielkonto" value={target} onChange={this.targetChanged} type="text" name="target" required />
+            <input placeholder="Target account number" value={target} onChange={this.targetChanged} type="text" name="target" required />
             <p>{this.state.targetMessage}</p>
           </Form.Field>
 
           <Form.Field>
             <label htmlFor="amount">Betrag [CHF]</label>
-            <input placeholder="Betrag in CHF" value={amount} onChange={this.amountChanged} type="number" name="amount" required />
+            <input placeholder="Amount in CHF" value={amount} onChange={this.amountChanged} type="number" name="amount" required />
             <p hidden={this.isAmountValid()}>Please specify the amount.</p>
           </Form.Field>
 
           { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
 
           <Button className={this.isFormValid() ? "" : "disabled"} primary fluid onClick={this.handleSubmit}>Pay</Button>
+        </Form>
+        <Form hidden={!success}>
+          <p>Transaction to {target} succeeded!</p>
+          <p>New balance: {balance}</p>
+          <Button primary fluid onClick={this.startOver}>Start over</Button>
         </Form>
       </div>
     )
