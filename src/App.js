@@ -71,7 +71,7 @@ class App extends React.Component {
     const MenuBar = withRouter(({ history, location: { pathname } }) => {
       if (isAuthenticated && user) {
         return (
-          <Menu stackable style={{ marginTop: 16}}>
+          <Menu stackable>
             <Menu.Item header>{user.firstname}&nbsp;{user.lastname} &ndash; {user.accountNr}</Menu.Item>
             {/* Links inside the App are created using the react-router's Link component */}
             <Menu.Item name='home'><Link to="/">Home</Link></Menu.Item>
@@ -94,7 +94,7 @@ class App extends React.Component {
 
     return (
       <Router>
-        <Container>
+        <Container style={{paddingTop: 20, paddingBottom: 20}}>
           <MenuBar />
           <Route exact path="/" render={props => <Home {...props} isAuthenticated={isAuthenticated} />}/>
           <Route path="/login" render={props => <Login {...props} authenticate={this.authenticate} />}/>
