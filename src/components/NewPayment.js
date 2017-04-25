@@ -107,7 +107,7 @@ class NewPayment extends React.Component {
     return (
       <div>
         <Header as='h3'>Neue Zahlung</Header>
-        <Form hidden={success} className={error ? 'error' : ''}>
+        <Form hidden={success} className={error ? 'error' : ''} onSubmit={this.handleSubmit}>
           <Form.Field>
             <label htmlFor="from">From</label>
             <input type="text" name="from" value={sourceText} required disabled />
@@ -127,7 +127,7 @@ class NewPayment extends React.Component {
 
           { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
 
-          <Button className={this.isFormValid() ? "" : "disabled"} primary fluid onClick={this.handleSubmit}>Pay</Button>
+          <Button className={this.isFormValid() ? "" : "disabled"} primary fluid>Pay</Button>
         </Form>
         <Form hidden={!success}>
           <p>Transaction to {target} succeeded!</p>
