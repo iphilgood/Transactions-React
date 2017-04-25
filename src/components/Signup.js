@@ -10,11 +10,10 @@ class Signup extends React.Component {
 
   state: {
     login: String,
-    didChangeLogin: Boolean,
     firstname: String,
     lastname: String,
     password: String,
-    didChangePassword: Boolean,
+    confirmpassword: String,
     error: String,
     redirectToReferrer: Boolean,
   }
@@ -24,76 +23,63 @@ class Signup extends React.Component {
     firstname: "",
     lastname: "",
     password: "",
+    confirmpassword: "",
     error: null,
     redirectToReferrer: false,
   }
 
-  didChangeLogin = false
-  didChangeFirstname = false
-  didChangeLastname = false
-  didChangePassword = false
-
   isFormValid = () => {
-    if (!this.didChangeLogin || !this.didChangePassword || !this.didChangeFirstname || !this.didChangeLastname) {
-      return false
-    }
-    return this.isLoginValid() && this.isPasswordValid() && this.isFirstnameValid() && this.isLastnameValid()
+    return this.isLoginValid() && this.isConfirmPasswordValid() && this.isFirstNameValid() && this.isLastNameValid()
   }
 
   handleLoginChanged = (event: Event) => {
-    this.didChangeLogin = true
     if(event.target instanceof HTMLInputElement) {
       this.setState({login: event.target.value})
     }
   }
 
   isLoginValid = () => {
-    if (!this.didChangeLogin) {
-      return true
-    }
     return this.state.login.length >= 3
   }
 
   handleFirstNameChanged = (event: Event) => {
-    this.didChangeFirstname = true
     if(event.target instanceof HTMLInputElement) {
       this.setState({firstname: event.target.value})
     }
   }
 
-  isFirstnameValid = () => {
-    if (!this.didChangeFirstname) {
-      return true
-    }
+  isFirstNameValid = () => {
     return this.state.firstname.length >= 2
   }
 
   handleLastNameChanged = (event: Event) => {
-    this.didChangeLastname = true
     if(event.target instanceof HTMLInputElement) {
       this.setState({lastname: event.target.value})
     }
   }
 
-  isLastnameValid = () => {
-    if (!this.didChangeLastname) {
-      return true
-    }
+  isLastNameValid = () => {
     return this.state.lastname.length >= 2
   }
 
   handlePasswordChanged = (event: Event) => {
-    this.didChangePassword = true
     if(event.target instanceof HTMLInputElement) {
       this.setState({password: event.target.value})
     }
   }
 
   isPasswordValid = () => {
-    if (!this.didChangePassword) {
-      return true
-    }
     return this.state.password.length >= 3;
+  }
+
+  handleConfirmPasswordChanged = (event: Event) => {
+    if(event.target instanceof HTMLInputElement) {
+      this.setState({confirmpassword: event.target.value})
+    }
+  }
+
+  isConfirmPasswordValid = () => {
+    return this.isPasswordValid() && this.state.confirmpassword === this.state.password;
   }
 
   handleSubmit = (event: Event) => {
@@ -123,14 +109,35 @@ class Signup extends React.Component {
           <Segment raised>
             <Header as='h3'>Registrieren</Header>
 
-            <Form.Input className={this.isLoginValid() ? "" : "error"} label="Username" onChange={this.handleLoginChanged} placeholder='Username' value={this.state.login} />
-            <Message error hidden={this.isLoginValid()} header='Username invalid' content='Username must have at least 3 characters.' />
-            <Form.Input className={this.isFirstnameValid() ? "" : "error"} label="First name" onChange={this.handleFirstNameChanged} placeholder='First name' value={this.state.firstname} />
-            <Message error hidden={this.isFirstnameValid()} header='First name invalid' content='First name must have at least 2 characters.' />
-            <Form.Input className={this.isLastnameValid() ? "" : "error"} label="Last name" onChange={this.handleLastNameChanged} placeholder='Last name' value={this.state.lastname} />
-            <Message error hidden={this.isLastnameValid()} header='First name invalid' content='First name must have at least 2 characters.' />
-            <Form.Input className={this.isPasswordValid() ? "" : "error"} label="Password" onChange={this.handlePasswordChanged} placeholder='Password' type="password" value={this.state.password} />
-            <Message error hidden={this.isPasswordValid()} header='Password invalid' content='Password must have at least 3 characters.' />
+            <Form.Field>
+              <label>First name:</label>
+              <input onChange={this.handleFirstNameChanged} placeholder='First name' value={this.state.firstname} />
+              <p hidden={this.isFirstNameValid()}>Please specify your first name.</p>
+            </Form.Field>
+
+            <Form.Field>
+              <label>Last name:</label>
+              <input onChange={this.handleLastNameChanged} placeholder='Last name' value={this.state.lastname} />
+              <p hidden={this.isLastNameValid()}>Please specify your last name.</p>
+            </Form.Field>
+
+            <Form.Field>
+              <label>User name:</label>
+              <input onChange={this.handleLoginChanged} placeholder='User' value={this.state.login} />
+              <p hidden={this.isLoginValid()}>Please specify your login, at least three characters.</p>
+            </Form.Field>
+
+            <Form.Field>
+              <label>Password:</label>
+              <input onChange={this.handlePasswordChanged} placeholder='Password' type='password' value={this.state.password} />
+              <p hidden={this.isPasswordValid()}>Please specify your password, at least three characters.</p>
+            </Form.Field>
+
+            <Form.Field>
+              <label>Confirm Password:</label>
+              <input onChange={this.handleConfirmPasswordChanged} placeholder='Password' type='password' value={this.state.confirmpassword} />
+              <p hidden={this.isConfirmPasswordValid()}>Please confirm your password.</p>
+            </Form.Field>
 
             { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
 
