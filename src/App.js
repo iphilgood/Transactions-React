@@ -94,7 +94,7 @@ class App extends React.Component {
 
     return (
       <Router>
-        <Container style={{paddingTop: 20, paddingBottom: 20}}>
+        <Container className="page__container">
           <MenuBar />
           <Route exact path="/" render={props => <Home {...props} isAuthenticated={isAuthenticated} />}/>
           <Route path="/login" render={props => <Login {...props} authenticate={this.authenticate} />}/>

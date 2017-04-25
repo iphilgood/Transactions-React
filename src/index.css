@@ -4,3 +4,11 @@ body {
   font-family: sans-serif;
   background: #f7f7f7;
 }
+
+.page__container {
+  padding: 20px 0;
+}
+
+.column__tight {
+  max-width: 500px;
+}

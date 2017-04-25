@@ -10,7 +10,7 @@ export type Props = {
 
 const Home = ({isAuthenticated}: Props) => (
   <Grid textAlign='center' centered>
-    <Grid.Column>
+    <Grid.Column className="column__tight">
       <Header as='h2'>Bank of Rapperswil</Header>
       <Segment raised>
         <Header as='h3'>E-Banking-Portal</Header>
