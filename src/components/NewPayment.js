@@ -78,7 +78,7 @@ class NewPayment extends React.Component {
   }
 
   isAmountValid = () => {
-    return this.state.amount >= 0.05
+    return this.state.amount >= 0.05 && this.state.amount <= this.state.balance
   }
 
   isTargetValid = () => {
