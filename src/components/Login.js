@@ -87,26 +87,26 @@ class Login extends React.Component {
           <Header as='h2'>Bank of Rapperswil</Header>
           <Form className={error ? 'error' : ''}>
             <Segment raised>
-              <Header as='h3'>Login</Header>
+              <Header as='h3'>Log in</Header>
               <Form.Field>
-                <label>User name:</label>
-                <input onChange={this.handleLoginChanged} placeholder='Login' value={this.state.login} />
-                <p hidden={this.isLoginValid()}>Please specify your login, at least three characters</p>
+                <label>Username</label>
+                <input onChange={this.handleLoginChanged} placeholder='Username' value={this.state.login} />
+                <p hidden={this.isLoginValid()}>Please specify your username, at least three characters</p>
               </Form.Field>
               <Form.Field>
-                <label>Password:</label>
+                <label>Password</label>
                 <input onChange={this.handlePasswordChanged} placeholder='Password' type="password" value={this.state.password} />
                 <p hidden={this.isPasswordValid()}>Please specify your password, at least three characters</p>
               </Form.Field>
 
-              { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
+              { error && <Message error header='Ooops!' content='Invalid username or password.' /> }
 
-              <Button className={this.isFormValid() ? "" : "disabled"} primary fluid onClick={this.handleSubmit}>Log-in</Button>
+              <Button className={this.isFormValid() ? "" : "disabled"} primary fluid onClick={this.handleSubmit}>Log in</Button>
             </Segment>
           </Form>
 
           <Message>
-            <Link to="/signup">Noch keinen Account?</Link>
+            <Link to="/signup">No account yet? Sign up here.</Link>
           </Message>
         </Grid.Column>
       </Grid>

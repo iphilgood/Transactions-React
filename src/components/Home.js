@@ -16,13 +16,13 @@ const Home = ({isAuthenticated}: Props) => (
         <Header as='h3'>E-Banking-Portal</Header>
         { isAuthenticated
           ? <div>
-              <p>Willkommen zurück!</p>
-              <Link className='ui button' to={'/dashboard'}>Zum Dashboard</Link>
+              <p>Welcome back!</p>
+              <Link className='ui button' to={'/dashboard'}>Go to dashboard</Link>
             </div>
           : <div>
-              <Link className='ui primary button fluid' to={'/login'}>Einloggen</Link>
-              <p style={{ marginTop: 16 }}>Falls Sie noch keinen Account besitzen können Sie sich hier registrieren:</p>
-              <Link className='ui button fluid' to={'/signup'}>Registrieren</Link>
+              <Link className='ui primary button fluid' to={'/login'}>Login</Link>
+              <p style={{ marginTop: 16 }}>If you don't have an account yet please sign up.</p>
+              <Link className='ui button fluid' to={'/signup'}>Register</Link>
             </div>
         }
       </Segment>

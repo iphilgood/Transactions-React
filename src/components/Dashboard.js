@@ -22,7 +22,7 @@ class Dashboard extends React.Component {
     return (
       <Segment.Group raised>
         <Segment>
-          <h1>Kontoübersicht {this.props.user.accountNr}</h1>
+          <h1>Account {this.props.user.accountNr}</h1>
         </Segment>
         <Segment>
           <Grid stackable>

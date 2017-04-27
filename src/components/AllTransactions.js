@@ -70,7 +70,7 @@ class AllTransactions extends React.Component {
   render() {
     return (
       <Segment raised>
-        <Header as='h3'>Alle Transaktionen</Header>
+        <Header as='h3'>All Transactions</Header>
 
         <Form>
           <Form.Group widths='equal'>

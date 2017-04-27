@@ -106,26 +106,26 @@ class NewPayment extends React.Component {
 
     return (
       <div>
-        <Header as='h3'>Neue Zahlung</Header>
+        <Header as='h3'>New payment</Header>
         <Form hidden={success} className={error ? 'error' : ''} onSubmit={this.handleSubmit}>
           <Form.Field>
-            <label htmlFor="from">From</label>
+            <label htmlFor="from">Source</label>
             <input type="text" name="from" value={sourceText} required disabled />
           </Form.Field>
 
           <Form.Field>
-            <label htmlFor="target">To</label>
+            <label htmlFor="target">Target</label>
             <input placeholder="Target account number" value={target} onChange={this.targetChanged} type="text" name="target" pattern=".{7,}" min="1000000" max="9999999" step="1" required />
             <p>{this.state.targetMessage}</p>
           </Form.Field>
 
           <Form.Field>
-            <label htmlFor="amount">Betrag [CHF]</label>
+            <label htmlFor="amount">Amount [CHF]</label>
             <input placeholder="Amount in CHF" value={amount} onChange={this.amountChanged} type="number" name="amount" min="0.05" step="0.05" required />
             <p hidden={this.isAmountValid()}>Please specify the amount.</p>
           </Form.Field>
 
-          { error && <Message error header='Hoppla!' content='Es ist ein Fehler aufgetreten.' /> }
+          { error && <Message error header='Ooops!' content='Unable to pay.' /> }
 
           <Button className={this.isFormValid() ? "" : "disabled"} primary fluid>Pay</Button>
         </Form>

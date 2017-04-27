@@ -39,7 +39,7 @@ class LatestTransactions extends React.Component {
   render() {
     return (
       <div>
-        <Header as='h3'>Letzte Zahlungen</Header>
+        <Header as='h3'>Latest transactions</Header>
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -53,7 +53,7 @@ class LatestTransactions extends React.Component {
           <TransactionsList transactions={this.state.transactions} />
         </Table>
 
-        <Link to='/transactions' className='ui button right floated'>Alle Transaktionen anzeigen</Link>
+        <Link to='/transactions' className='ui button right floated'>Show all transactions</Link>
       </div>
     )
   }
